@@ -1,12 +1,13 @@
 FROM python:3.7.0-alpine3.8
   
 ARG LIBRDKAFKA_NAME="librdkafka"
-ARG LIBRDKAFKA_VER="0.11.6"
+ARG LIBRDKAFKA_VER="1.3.0"
 
 # Install librdkafka
 RUN apk add --no-cache --virtual .fetch-deps \
+      build-base \
       ca-certificates \
-      libressl \
+      openssl \
       curl \
       tar && \
 \
@@ -23,7 +24,7 @@ RUN apk add --no-cache --virtual .fetch-deps \
     apk add --no-cache --virtual .build-deps \
       bash \
       g++ \
-      libressl-dev \
+      openssl-dev \
       make \
       musl-dev \
       zlib-dev && \
@@ -45,8 +46,7 @@ RUN apk add --no-cache --virtual .fetch-deps \
       $runDeps && \
 \
     cd / && \
-    apk del .fetch-deps .build-deps && \
     rm -rf $BUILD_DIR
 
-LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>" \
-      org.label-schema.vcs-url="https://github.com/ucalgary/docker-python-librdkafka"
+LABEL maintainer="wheresalice" \
+      org.label-schema.vcs-url="https://github.com/wheresalice/docker-python-librdkafka"
